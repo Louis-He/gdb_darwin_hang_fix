@@ -129,7 +129,7 @@ static const char *copied_shell;
 #define PAGE_ROUND(x) PAGE_TRUNC((x) + mach_page_size - 1)
 
 /* This controls output of inferior debugging.  */
-static unsigned int darwin_debug_flag = 4;
+static unsigned int darwin_debug_flag = 0;
 
 /* Create a __TEXT __info_plist section in the executable so that gdb could
    be signed.  This is required to get an authorization for task_for_pid.

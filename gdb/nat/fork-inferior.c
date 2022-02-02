@@ -455,7 +455,6 @@ startup_inferior (process_stratum_target *proc_target, pid_t pid, int ntraps,
 		  struct target_waitstatus *last_waitstatus,
 		  ptid_t *last_ptid)
 {
-  printf("[LOUIS DEBUG] startup_inferior\n");
   int pending_execs = ntraps;
   int terminal_initted = 0;
   ptid_t resume_ptid;
