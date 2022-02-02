@@ -1,3 +1,35 @@
+# README for this repository
+
+The repository is the modification of the GNU GDB-11.2: Source code: https://ftp.gnu.org/gnu/gdb/gdb-11.2.tar.gz
+
+The bug of GDB hang on Mac OS X has been reported a long time ago and it still persists in the latest GDB 11.2 release. There is a solution from domq for GDB 10.2: https://github.com/domq/homebrew-gdb/blob/master/Formula/gdb.rb
+
+In this repository, I simply moved part of the change from the domq to GDB 11.2 and seems like the GDB 11.2 can work most of the time. I have tested it under OS X 12.2 Intel-based macbook pro. It is still possible that the gdb will hang waiting of the new forked process due to the  
+
+	gdb/nat/fork-inferior.c: 488 target_wait()
+
+# How to build GDB from source
+- Go to the source directory and run
+  
+```
+mkdir build
+cd    build
+../configure --prefix=/usr
+make
+```
+
+- GDB should now build in ```build/gdb```, change directory to folder ```gdb``` and then codesign the gdb executable
+```
+cd gdb
+codesign --entitlements ../../darwin_gdb_xml/gdb-entitlement.xml -fs gdb-cert ./gdb
+```
+
+- You should now be able to run the ```build/gdb/gdb``` and debug your code.
+
+
+# Original README for GNU GDB
+The following is the README from the original GNU GDB Repository
+
 		   README for GNU development tools
 
 This directory contains various GNU compilers, assemblers, linkers, 
