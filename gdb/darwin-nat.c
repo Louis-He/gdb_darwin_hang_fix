@@ -129,7 +129,7 @@ static const char *copied_shell;
 #define PAGE_ROUND(x) PAGE_TRUNC((x) + mach_page_size - 1)
 
 /* This controls output of inferior debugging.  */
-static unsigned int darwin_debug_flag = 0;
+static unsigned int darwin_debug_flag = 4;
 
 /* Create a __TEXT __info_plist section in the executable so that gdb could
    be signed.  This is required to get an authorization for task_for_pid.
@@ -1096,18 +1096,29 @@ darwin_nat_target::decode_message (mach_msg_header_t *hdr,
 		{
 		  status->kind = TARGET_WAITKIND_EXITED;
 		  status->value.integer = WEXITSTATUS (wstatus);
+      inferior_debug (4, _("darwin_wait: pid=%d exit, status=0x%x\n"),
+				  res_pid, wstatus);
+		}
+	      else if (WIFSTOPPED (wstatus))
+		{
+		  status->kind = TARGET_WAITKIND_IGNORE;
+		  inferior_debug (4, _("darwin_wait: pid %d received WIFSTOPPED\n"), res_pid);
+		  return minus_one_ptid;
 		}
 	      else
 		{
 		  status->kind = TARGET_WAITKIND_SIGNALLED;
 		  status->value.sig = gdb_signal_from_host (WTERMSIG (wstatus));
-		}
+      inferior_debug (4, _("darwin_wait: pid=%d received signal %d\n"),
+			      res_pid, status->value.sig);
+ 		}
+		
 
-	      inferior_debug (4, _("darwin_wait: pid=%d exit, status=0x%x\n"),
-			      res_pid, wstatus);
+	      // inferior_debug (4, _("darwin_wait: pid=%d exit, status=0x%x\n"),
+			  //     res_pid, wstatus);
 
-	      /* Looks necessary on Leopard and harmless...  */
-	      wait4 (inf->pid, &wstatus, 0, NULL);
+	      // /* Looks necessary on Leopard and harmless...  */
+	      // wait4 (inf->pid, &wstatus, 0, NULL);
 
 	      return ptid_t (inf->pid);
 	    }

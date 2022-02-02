@@ -455,6 +455,7 @@ startup_inferior (process_stratum_target *proc_target, pid_t pid, int ntraps,
 		  struct target_waitstatus *last_waitstatus,
 		  ptid_t *last_ptid)
 {
+  printf("[LOUIS DEBUG] startup_inferior\n");
   int pending_execs = ntraps;
   int terminal_initted = 0;
   ptid_t resume_ptid;
@@ -483,7 +484,10 @@ startup_inferior (process_stratum_target *proc_target, pid_t pid, int ntraps,
 
       struct target_waitstatus ws;
       memset (&ws, 0, sizeof (ws));
+
+      // printf("[LOUIS DEBUG] resume ptid %d\n", resume_ptid);
       event_ptid = target_wait (resume_ptid, &ws, 0);
+      // printf("[LOUIS DEBUG] target_waited\n");
 
       if (last_waitstatus != NULL)
 	*last_waitstatus = ws;
