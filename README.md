@@ -1,5 +1,9 @@
 # README for this repository
 
+The change has already been commited to the GDB main branch: https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=7ff917016a203cdff3074abfcf96c1553944af94
+
+You can now build from the main working branch of GDB instead of building from this repo. I am archivin this repository.
+
 The repository is the modification of the GNU GDB-11.2: Source code: https://ftp.gnu.org/gnu/gdb/gdb-11.2.tar.gz
 
 The bug of GDB hang on Mac OS X has been reported a long time ago and it still persists in the latest GDB 11.2 release. There is a solution from domq for GDB 10.2: https://github.com/domq/homebrew-gdb/blob/master/Formula/gdb.rb
